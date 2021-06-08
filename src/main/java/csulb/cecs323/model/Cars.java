@@ -22,4 +22,30 @@ public class Cars {
         return "Cars - VIN: " + this.VIN + " Manufacturer: " + this.manufacturer +
                 " Model: " + this.model + " year: " + this.year;
     }
+    public String getVIN(){
+        return VIN;
+    }
+
+    public String getManufacturer(){
+        return manufacturer;
+    }
+    public String getModel(){
+        return model;
+    }
+    public int getYear(){
+        return year;
+    }
+
+    public void setVIN(String VIN){
+        this.VIN = VIN;
+    }
+    public void setManufacturer(String manufacturer){
+        this.manufacturer = manufacturer;
+    }
+    public void setVIN(String model){
+        this.model = model;
+    }
+    public void setVIN(int year){
+        this.year = year;
+    }
 }
