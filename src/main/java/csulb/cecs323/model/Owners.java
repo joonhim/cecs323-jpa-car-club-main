@@ -1,6 +1,7 @@
 package csulb.cecs323.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Owners {
@@ -19,6 +20,9 @@ public class Owners {
     /** Their cell phone number that we use to contact the car owner. */
     @Column (length=20, nullable = false, unique = true)
     private String cell_phone;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
+    private List<Cars> cars;
 
     public Owners (String first_name, String last_name, String cell_phone) {
         this.setLast_name(last_name);

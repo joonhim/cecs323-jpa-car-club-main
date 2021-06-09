@@ -12,6 +12,7 @@ public class Cars {
 
     /** The unique ID of the vehicle.  Limited to 17 characters. */
     @Id
+    @Column(length = 17, nullable = false)
     private String VIN;
 
     /** The name of the corporation which manufactured the vehicle.  Limited to 40 characters. */
@@ -42,11 +43,13 @@ public class Cars {
      */
     public Cars(){}
 
-    public Cars(String VIN, String manufacturer, String model, int model_year){
+    public Cars(String VIN, String manufacturer, String model, int model_year, Owners owners, auto_body_styles abs){
         this.setVIN(VIN);
         this.setManufacturer(manufacturer);
         this.setModel(model);
         this.setModel_year(model_year);
+        owner = owners;
+        autoStyle = abs;
     }
 
     /**

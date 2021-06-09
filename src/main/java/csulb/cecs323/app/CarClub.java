@@ -84,6 +84,30 @@ public class CarClub {
       // Create the list of owners in the database.
       carclub.createEntity (owners);
 
+      // List of cars that we want to persist
+      List<Cars> cars = new ArrayList<>() {
+         {
+            add(new Cars("US1233000", "Tesla", "Model S", 2018,
+                    owners.get(0), carclub.getStyle("coupe")));
+            add(new Cars("JP98765001", "Lexus", "GS 350F", 2014,
+                    owners.get(1), carclub.getStyle("sedan")));
+            //add(new Cars("JP000000", "Toyota", "Tacoma", 2018,
+                    //owners.get(0), carclub.getStyle("pickup truck")));
+            //add(new Cars("JP000001", "Nissan", "GTR", 2020,
+                    //owners.get(1), carclub.getStyle("coupe")));
+            //add(new Cars("US1233000", "Tesla", "Model S", 2018,
+                    //owners.get(2), carclub.getStyle("coupe")));
+            //add(new Cars("JP98765001", "Lexus", "GS 350F", 2014,
+                    //owners.get(3), carclub.getStyle("sedan")));
+            add(new Cars("JP000000", "Toyota", "Tacoma", 2018,
+                    owners.get(2), carclub.getStyle("pickup truck")));
+            add(new Cars("JP000001", "Nissan", "GTR", 2020,
+                    owners.get(3), carclub.getStyle("sports car")));
+         }
+      };
+      // Create the list of cars in the database
+      carclub.createEntity (cars);
+
       // Commit the changes so that the new data persists and is visible to other users.
       tx.commit();
       LOGGER.fine("End of Transaction");
