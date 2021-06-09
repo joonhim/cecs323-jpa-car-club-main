@@ -20,10 +20,6 @@ public class Owners {
     @Column (length=20, nullable = false, unique = true)
     private String cell_phone;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id", referencedColumnName = "owner_id", nullable = false)
-    private Owners owner;
-
     public Owners (String first_name, String last_name, String cell_phone) {
         this.setLast_name(last_name);
         this.setFirst_name(first_name);

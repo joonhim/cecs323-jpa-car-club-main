@@ -38,7 +38,5 @@ public class auto_body_styles {
     public String toString () {
         return "auto_body_style - Name: " + this.getName() + " Description: " + this.getDescription().substring(0,20);
     }
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "name", referencedColumnName = "name", nullable = false)
-    private auto_body_styles autoStyle;
+
 }
