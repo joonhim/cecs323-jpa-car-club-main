@@ -80,7 +80,6 @@ public class CarClub {
       owners.add(new Owners("Reese", "Mike", "714-892-5544"));
       owners.add(new Owners("Leck", "Carl", "714-321-3729"));
       owners.add(new Owners("Guitierez", "Luis", "562-982-2899"));
-      owners.add(new Owners("Ramos", "Nate", "562-932-0666"));
       // Create the list of owners in the database.
       carclub.createEntity (owners);
 
@@ -91,18 +90,14 @@ public class CarClub {
                     owners.get(0), carclub.getStyle("coupe")));
             add(new Cars("JP98765001", "Lexus", "GS 350F", 2014,
                     owners.get(1), carclub.getStyle("sedan")));
-            //add(new Cars("JP000000", "Toyota", "Tacoma", 2018,
-                    //owners.get(0), carclub.getStyle("pickup truck")));
-            //add(new Cars("JP000001", "Nissan", "GTR", 2020,
-                    //owners.get(1), carclub.getStyle("coupe")));
-            //add(new Cars("US1233000", "Tesla", "Model S", 2018,
-                    //owners.get(2), carclub.getStyle("coupe")));
-            //add(new Cars("JP98765001", "Lexus", "GS 350F", 2014,
-                    //owners.get(3), carclub.getStyle("sedan")));
             add(new Cars("JP000000", "Toyota", "Tacoma", 2018,
                     owners.get(2), carclub.getStyle("pickup truck")));
-            add(new Cars("JP000001", "Nissan", "GTR", 2020,
-                    owners.get(3), carclub.getStyle("sports car")));
+            add(new Cars("JP000001", "Nissan", "Quest", 2020,
+                    owners.get(0), carclub.getStyle("minivan")));
+            add(new Cars("JP000230", "Toyota", "Sequoia", 2018,
+                    owners.get(2), carclub.getStyle("sport-utility vehicle")));
+            add(new Cars("JP001201", "Nissan", "GTR", 2020,
+                    owners.get(1), carclub.getStyle("sports car")));
          }
       };
       // Create the list of cars in the database

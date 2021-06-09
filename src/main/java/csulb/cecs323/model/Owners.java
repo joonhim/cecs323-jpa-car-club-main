@@ -21,9 +21,6 @@ public class Owners {
     @Column (length=20, nullable = false, unique = true)
     private String cell_phone;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
-    private List<Cars> cars;
-
     public Owners (String first_name, String last_name, String cell_phone) {
         this.setLast_name(last_name);
         this.setFirst_name(first_name);

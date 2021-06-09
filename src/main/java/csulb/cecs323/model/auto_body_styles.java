@@ -18,9 +18,7 @@ public class auto_body_styles {
     @Column(nullable = false, length = 200)
     private String description;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "VIN")
-    private Cars cars;
+
 
     public String getName() {
         return name;
