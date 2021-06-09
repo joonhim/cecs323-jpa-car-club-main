@@ -15,37 +15,48 @@ public class Cars {
     private String model;
 
     /** The year that the vehicle was manufactured.  For now, do not worry about validating this #. */
-    private int year;
+    private int model_year;
 
     @Override
     public String toString () {
         return "Cars - VIN: " + this.VIN + " Manufacturer: " + this.manufacturer +
-                " Model: " + this.model + " year: " + this.year;
+                " Model: " + this.model + " year: " + this.model_year;
     }
-    public String getVIN(){
-        return VIN;
+    /** constructors
+     */
+    public Cars(){}
+
+    public Cars(String VIN, String manufacturer, String model, int model_year){
+        this.setVIN(VIN);
+        this.setManufacturer(manufacturer);
+        this.setModel(model);
+        this.setModel_year(model_year);
     }
 
-    public String getManufacturer(){
-        return manufacturer;
-    }
-    public String getModel(){
-        return model;
-    }
-    public int getYear(){
-        return year;
-    }
+    /**
+     * Setters and getters
+     */
+    public String getVIN(){return VIN;}
 
     public void setVIN(String VIN){
         this.VIN = VIN;
     }
+
+    public String getManufacturer(){return manufacturer;}
+
     public void setManufacturer(String manufacturer){
         this.manufacturer = manufacturer;
     }
-    public void setVIN(String model){
+
+    public String getModel(){return model;}
+
+    public void setModel(String model){
         this.model = model;
     }
-    public void setVIN(int year){
-        this.year = year;
+
+    public int getModel_year(){return model_year;}
+
+    public void setModel_year(int model_year){
+        this.model_year = model_year;
     }
 }
