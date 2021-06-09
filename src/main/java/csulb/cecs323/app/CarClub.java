@@ -80,6 +80,7 @@ public class CarClub {
       owners.add(new Owners("Reese", "Mike", "714-892-5544"));
       owners.add(new Owners("Leck", "Carl", "714-321-3729"));
       owners.add(new Owners("Guitierez", "Luis", "562-982-2899"));
+      owners.add(new Owners("Ramos", "Nate", "562-932-0666"));
       // Create the list of owners in the database.
       carclub.createEntity (owners);
 

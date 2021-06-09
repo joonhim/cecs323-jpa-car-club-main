@@ -1,16 +1,17 @@
 package csulb.cecs323.model;
 
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * Individual, physical automobiles that someone can drive on land to transport one or more passengers
  * and a limited amount of cargo around.  Cars have four wheels and usually travel on paved roads.
  */
+@Entity
+@Table(name="cars")
 public class Cars {
+
     /** The unique ID of the vehicle.  Limited to 17 characters. */
+    @Id
     private String VIN;
 
     /** The name of the corporation which manufactured the vehicle.  Limited to 40 characters. */
