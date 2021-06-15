@@ -15,12 +15,11 @@ package csulb.cecs323.app;
 // Import all of the entity classes that we have written for this application.
 import csulb.cecs323.model.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Logger;
 
 /**
@@ -72,20 +71,42 @@ public class CarClub {
       LOGGER.fine("Begin of Transaction");
       EntityTransaction tx = manager.getTransaction();
 
-      tx.begin();
-      // List of owners that I want to persist.  I could just as easily done this with the seed-data.sql
-      List <Owners> owners = new ArrayList<Owners>();
-      // Load up my List with the Entities that I want to persist.  Note, this does not put them
-      // into the database.
-      owners.add(new Owners("Reese", "Mike", "714-892-5544"));
-      owners.add(new Owners("Leck", "Carl", "714-321-3729"));
-      owners.add(new Owners("Guitierez", "Luis", "562-982-2899"));
-      // Create the list of owners in the database.
-      carclub.createEntity (owners);
+      boolean valid = false;
+      do{
+         Scanner scan = new Scanner(System.in);
+         System.out.println("Books");
+
+         int ans = scan.nextInt();
+         switch (ans){
+            case 1:
+               //Add something to the Database
+               tx.begin();
+               System.out.println("Add a Publisher");
+               carclub.createEntity(carclub.addPublisher());
+               // Commit the changes so that the new data persists and is visible to other users.
+               tx.commit();
+               LOGGER.fine("End of Transaction");
+               break;
+            case 2:
+               //Delete something from the Database
+               System.out.println("Delete");
+               break;
+            case 3:
+               //Read or Return value from the Database
+               System.out.println("Read");
+               break;
+            case 4:
+               System.out.println("Thank you. Have a nice Day.");
+               return;
+            default:
+               valid = false;
+               System.out.println("Invalid Response: " + ans + ". Please select from the menu.");
+         }
+      }while(!valid);
+      //carclub.createEntity (owners);
 
       // Commit the changes so that the new data persists and is visible to other users.
-      tx.commit();
-      LOGGER.fine("End of Transaction");
+
 
    } // End of the main method
 
@@ -130,4 +151,116 @@ public class CarClub {
          return styles.get(0);
       }
    }// End of the getStyle method
+
+
+   public List<Publishers> addPublisher(){
+      List<Publishers> adding_publisher = new ArrayList<Publishers>();
+      Scanner scan = new Scanner(System.in);
+      System.out.println("Adding a Publisher");
+      System.out.println("Enter the Publisher Name: ");
+      String name = scan.nextLine();
+      System.out.println("Enter Publisher Phone: ");
+      String phone = scan.nextLine();
+      System.out.println("Enter Publisher Email: ");
+      String email = scan.nextLine();
+      adding_publisher.add(new Publishers(name, email, phone));
+      System.out.println("Publisher " + name + " has been added to the database");
+      return adding_publisher;
+   }
+
+   /**
+   * Adding Book into DB
+   */
+   public void addBook() {
+      Scanner scan = new Scanner(System.in);
+      System.out.println("Adding a Book");
+      System.out.println("Enter the ISBN: ");
+      String isbn = scan.nextLine();
+      System.out.println("Enter the Title: ");
+      String title = scan.nextLine();
+      System.out.println("Enter Year Published: ");
+      String year = scan.nextLine();
+      System.out.println("Enter Authoring Entity Name: ");
+      int authoring_name = scan.nextInt();
+      System.out.println("Enter the Publisher Name: ");
+      String publisher_name = scan.nextLine();
+
+      Books book = new Books(isbn, title, year, authoring_name, publisher_name);
+      entityManager.persist(book);
+      System.out.println("Book " + title + " has been added to the database");
+   }
+
+    /**
+     * Adding Authoring Entity into DB
+     */
+    public void addAuthoringEntity() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Adding an Authoring Entity");
+        System.out.println("Enter the Author Type: ");
+        String authorEntityType = scan.nextLine();
+        System.out.println("Enter Author Email: ");
+        String email = scan.nextLine();
+        System.out.println("Enter the Author Name: ");
+        String name = scan.nextLine();
+        System.out.println("Enter the Head Writer: ");
+        String headWriter = scan.nextLine();
+        System.out.println("Enter the Year Formed: ");
+        String yearFormed = scan.nextLine();
+
+        AuthoringEntities authoringEntity = new AuthoringEntities(authorEntityType, email, name, headWriter, yearFormed);
+        entityManager.persist(authoringEntity);
+        System.out.println("Authoring Entity " + name + " has been added to the database");
+    }
+
+    /**
+     * Deleting Books in DB
+     */
+    public void deleteBooks(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
+        EntityManager em = emf.createEntityManager();
+
+        Scanner scan = new Scanner(System.in);
+        System.out.println("What is the name of the book");
+        System.out.println("Enter the name of the publisher of the book: ");
+        String name_publisher = scan.nextLine();
+        System.out.println("Enter the title of the book: ");
+        String title = scan.nextLine();
+        System.out.println("Enter the Authoring Entity Email: ");
+        String authoring_email = scan.nextLine();
+        Query q = em.createNativeQuery("DELETE ISBN, TITLE, YEAR_PUBLISHED, AUTHORING_ENTITY_NAME, PUBLISHER_NAME  FROM BOOK a WHERE PUBLISHER_NAME = :name_publisher AND TITLE = :title AND AUTHORING_ENTITY_NAME = :authoring_email", Books.class);
+        List<Books> book = q.getResultList();
+        for (Books a : book) {
+            System.out.println(a.getBookTitle()+ " was deleted from the database");
+        }
+    }
+
+    /**
+     * Updating Books in DB
+     */
+//    public void updateBooks(){
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
+//        EntityManager em = emf.createEntityManager();
+//        Scanner scan = new Scanner(System.in);
+//        System.out.println("Enter the ISBN of the book: ");
+//        String isbn1 = scan.nextLine();
+//        Book a = em.find(Book.class, isbn);
+//        Query q = em.createNativeQuery("SELECT ISBN, TITLE, YEAR_PUBLISHED, AUTHORING_ENTITY_NAME, PUBLISHER_NAME  FROM BOOK a WHERE ISBN = :isbn1", Books.class);
+//        List<Books> book = q.getResultList();
+//        for (Books a : book) {
+//            System.out.println("Enter Authoring Entity Name: ");
+//            String authoring_name = scan.nextLine();
+//            a.setAuthorEntityEmail(authoring_name);
+//        }
+//    }
+
+    /**
+     * Returns PK of Books
+     */
+    public List<Books> pkBook(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
+        EntityManager em = emf.createEntityManager();
+        Query q = em.createNativeQuery("SELECT ISBN  FROM BOOK a", Books.class);
+        List<Books> book = q.getResultList();
+        return book;
+    }
 } // End of CarClub class
