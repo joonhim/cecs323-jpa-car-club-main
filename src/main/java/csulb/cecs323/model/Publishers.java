@@ -16,27 +16,27 @@ public class Publishers {
      */
     public Publishers(){}
 
-    public Publishers(String n, String e, String p){
-        this.name = n;
-        this.email = e;
-        this.phone = p;
+    public Publishers(String name, String email, String phone){
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
     }
 
     /* getters and setters
      */
     public String getName(){return this.name;}
-    public void setName(String n){
-        this.name = n;
+    public void setName(String name){
+        this.name = name;
     }
 
     public String getPhone(){return this.phone;}
-    public void setPhone(String p){
-        this.phone = p;
+    public void setPhone(String phone){
+        this.phone = phone;
     }
 
     public String getEmail(){return this.email;}
-    public void setEmail(String e){
-        this.email = e;
+    public void setEmail(String email){
+        this.email = email;
     }
 
     /* function that returns string values of the publisher

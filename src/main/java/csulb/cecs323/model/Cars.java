@@ -24,18 +24,19 @@ public class Cars {
     /** The year that the vehicle was manufactured.  For now, do not worry about validating this #. */
     @Column(length = 4, nullable = false)
     private int model_year;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", referencedColumnName = "owner_id", nullable = false)
     private Owners owner;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "name", referencedColumnName = "name", nullable = false)
     private auto_body_styles autoStyle;
+
     @Override
     public String toString () {
         return "Cars - VIN: " + this.VIN + " Manufacturer: " + this.manufacturer +
                 " Model: " + this.model + " year: " + this.model_year;
-
-
     }
     /** constructors
      */

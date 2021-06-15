@@ -119,6 +119,13 @@ public class CarClub {
                 carclub.returnPkBook();
                 break;
             case 6:
+                tx.begin();
+                System.out.println("Adding a Writing Group");
+                carclub.addWritingGroup();
+                tx.commit();
+                LOGGER.fine("End of Transaction");
+                break;
+            case 7:
                 System.out.println("Thank you. Have a nice Day.");
                 return;
             default:
@@ -254,11 +261,10 @@ public class CarClub {
     /**
      * Adding Authoring Entity into DB
      */
-    public void addAuthoringEntity() {
+    public void addWritingGroup() {
         Scanner scan = new Scanner(System.in);
         System.out.println("Adding an Authoring Entity");
-        System.out.println("Enter the Author Type: ");
-        String authorEntityType = scan.nextLine();
+
         System.out.println("Enter Author Email: ");
         String email = scan.nextLine();
         System.out.println("Enter the Author Name: ");
@@ -266,10 +272,12 @@ public class CarClub {
         System.out.println("Enter the Head Writer: ");
         String headWriter = scan.nextLine();
         System.out.println("Enter the Year Formed: ");
-        String yearFormed = scan.nextLine();
+        int yearFormed = scan.nextInt();
 
-        AuthoringEntities authoringEntity = new AuthoringEntities(authorEntityType, email, name, headWriter, yearFormed);
-        entityManager.persist(authoringEntity);
+        //AuthoringEntities authoringEntity = new AuthoringEntities(email, name, headWriter, yearFormed);
+        WritingGroups writingGroup = new WritingGroups(email, name, headWriter, yearFormed);
+
+        entityManager.persist(writingGroup);
         System.out.println("Authoring Entity " + name + " has been added to the database");
     }
 
