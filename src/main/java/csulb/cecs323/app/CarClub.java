@@ -56,6 +56,7 @@ public class CarClub {
    public CarClub(EntityManager manager) {
       this.entityManager = manager;
    }
+   private Query query;
 
    public static void main(String[] args) {
       LOGGER.fine("Creating EntityManagerFactory and EntityManager");
@@ -88,12 +89,17 @@ public class CarClub {
                LOGGER.fine("End of Transaction");
                break;
             case 2:
-               //Delete something from the Database
-               System.out.println("Delete");
+               //return publishers
+               System.out.println("Returning Publishers");
+               carclub.returnPublisher();
                break;
             case 3:
-               //Read or Return value from the Database
-               System.out.println("Read");
+               //Delete a publisher
+               tx.begin();
+               System.out.println("Delete publisher");
+               carclub.deletePublisher();
+               tx.commit();
+               LOGGER.fine("End of Transaction");
                break;
             case 4:
                System.out.println("Thank you. Have a nice Day.");
@@ -157,17 +163,44 @@ public class CarClub {
       List<Publishers> adding_publisher = new ArrayList<Publishers>();
       Scanner scan = new Scanner(System.in);
       System.out.println("Adding a Publisher");
-      System.out.println("Enter the Publisher Name: ");
+      System.out.print("Enter the Publisher Name: ");
       String name = scan.nextLine();
-      System.out.println("Enter Publisher Phone: ");
+      System.out.print("\nEnter Publisher Phone: ");
       String phone = scan.nextLine();
-      System.out.println("Enter Publisher Email: ");
+      System.out.print("\nEnter Publisher Email: ");
       String email = scan.nextLine();
+      System.out.println();
       adding_publisher.add(new Publishers(name, email, phone));
       System.out.println("Publisher " + name + " has been added to the database");
       return adding_publisher;
    }
 
+   public void returnPublisher(){
+       query = entityManager.createNativeQuery("SELECT * FROM PUBLISHERS");
+       List<Object[]> result = query.getResultList();
+       System.out.printf("Publishers");
+       for(int i = 0; i < result.size(); i++) {
+           System.out.printf("\n" + (i+1) + ". " + result.get(i)[0] + " " + result.get(i)[1] + " " + result.get(i)[2]);
+       }
+       System.out.println();
+   }
+
+   public void deletePublisher(){
+       returnPublisher();
+       Scanner scan = new Scanner(System.in);
+       System.out.println("Deleting a Publisher will remove all information the publisher has in the database.");
+       System.out.println("Who will you like to remove?");
+       System.out.print("Enter the Publisher Name: ");
+       String name = scan.nextLine();
+       System.out.print("\nEnter Publisher Phone: ");
+       String phone = scan.nextLine();
+       System.out.print("\nEnter Publisher Email: ");
+       String email = scan.nextLine();
+       System.out.println();
+       query = entityManager.createNativeQuery("DELETE FROM PUBLISHERS WHERE PUBLISHERS.NAME = '" + name + "' AND " + " EMAIL = '" + email + "' AND PHONE = '"+phone+"'");
+       query.executeUpdate();
+       System.out.println("Publisher " + name + " has been deleted.");
+   }
    /**
    * Adding Book into DB
    */
