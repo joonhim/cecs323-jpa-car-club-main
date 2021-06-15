@@ -74,10 +74,19 @@ public class CarClub {
 
       boolean valid = false;
       do{
+         System.out.println("---Project : JPA Books---");
+         System.out.println("1. Adding a Publisher");
+         System.out.println("2. Retrieve all Publishers");
+         System.out.println("3. Delete a Publisher");
+         System.out.println("4. Return all Primary Key for Publisher");
+         System.out.println("5. Return all Primary Key for Books");
+         System.out.println("6. Exit");
+
+
          Scanner scan = new Scanner(System.in);
-         System.out.println("Books");
 
          int ans = scan.nextInt();
+
          switch (ans){
             case 1:
                //Add something to the Database
@@ -102,12 +111,21 @@ public class CarClub {
                LOGGER.fine("End of Transaction");
                break;
             case 4:
-               System.out.println("Thank you. Have a nice Day.");
-               return;
+               System.out.println("Returning PK for Publisher");
+               carclub.returnPkPublisher();
+                break;
+            case 5:
+                System.out.println("Returning PK Books");
+                carclub.returnPkBook();
+                break;
+            case 6:
+                System.out.println("Thank you. Have a nice Day.");
+                return;
             default:
                valid = false;
                System.out.println("Invalid Response: " + ans + ". Please select from the menu.");
          }
+         System.out.println("\n\n");
       }while(!valid);
       //carclub.createEntity (owners);
 
@@ -159,6 +177,7 @@ public class CarClub {
    }// End of the getStyle method
 
 
+
    public List<Publishers> addPublisher(){
       List<Publishers> adding_publisher = new ArrayList<Publishers>();
       Scanner scan = new Scanner(System.in);
@@ -178,13 +197,22 @@ public class CarClub {
    public void returnPublisher(){
        query = entityManager.createNativeQuery("SELECT * FROM PUBLISHERS");
        List<Object[]> result = query.getResultList();
-       System.out.printf("Publishers");
+       System.out.print("Publishers: ");
        for(int i = 0; i < result.size(); i++) {
            System.out.printf("\n" + (i+1) + ". " + result.get(i)[0] + " " + result.get(i)[1] + " " + result.get(i)[2]);
        }
        System.out.println();
    }
 
+   public void returnPkPublisher(){
+       query = entityManager.createNativeQuery("SELECT PUBLISHERS.NAME FROM PUBLISHERS");
+       List<Object[]> result = query.getResultList();
+       System.out.print("PK of Publisher: ");
+       for(int i = 0; i < result.size(); i++){
+           System.out.printf("\n" + result.get(i));
+       }
+       System.out.println();
+   }
    public void deletePublisher(){
        returnPublisher();
        Scanner scan = new Scanner(System.in);
@@ -289,11 +317,11 @@ public class CarClub {
     /**
      * Returns PK of Books
      */
-    public List<Books> pkBook(){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
-        EntityManager em = emf.createEntityManager();
-        Query q = em.createNativeQuery("SELECT ISBN  FROM BOOK a", Books.class);
-        List<Books> book = q.getResultList();
-        return book;
+    public void returnPkBook(){
+        query = entityManager.createNativeQuery("SELECT ISBN, BOOK.TITLE  FROM BOOK");
+        List<Object[]> res = query.getResultList();
+        for(int i = 0; i < res.size(); i++){
+            System.out.println((i+1) + ". " + res.get(i)[0]);
+        }
     }
 } // End of CarClub class
