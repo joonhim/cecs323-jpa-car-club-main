@@ -37,7 +37,7 @@ public class Publishers {
     public Publishers(){}
 
     /**
-     * The constructor of the Publisher class.
+     * The constructor for the Publisher class.
      * @param name
      * @param email
      * @param phone

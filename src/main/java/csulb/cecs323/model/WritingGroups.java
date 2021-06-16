@@ -18,6 +18,8 @@ import javax.persistence.Entity;
 public class WritingGroups extends authoring_entities {
     // Constructor
 
+    public WritingGroups() {}
+
     /**
      * The constructor for the Writing Groups class.
      * @param email
@@ -29,8 +31,6 @@ public class WritingGroups extends authoring_entities {
         super(email, name, head_writer, year_formed);
     }
 
-    public WritingGroups() { }
-
     /**
      * Gets the email address of the Author.
      * @return Email address of the Author
@@ -39,8 +39,7 @@ public class WritingGroups extends authoring_entities {
     public String getEmail(){ return super.getEmail();}
 
     /**
-     * toString() method prints the string values of the Writing Group
-     * @return
+     * toString() method returns the super string values of the Writing Group
      */
     @Override
     public String toString(){
