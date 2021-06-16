@@ -13,7 +13,15 @@ public class individual_author extends authoring_entities {
 
     public individual_author(){}
 
+<<<<<<< Updated upstream
     public individual_author(String email){
+=======
+<<<<<<< HEAD
+    public individual_author(String email, String name){
+=======
+    public individual_author(String email){
+>>>>>>> 298a04b86a476d88b2cfa948dc86cafd4b2bd811
+>>>>>>> Stashed changes
         super(email);
     }
 

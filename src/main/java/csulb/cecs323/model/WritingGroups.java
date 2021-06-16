@@ -20,7 +20,7 @@ public class WritingGroups extends authoring_entities {
     public WritingGroups() { }
 
     /**
-     * 
+     *
      * @return Email address of the Author
      */
     @Override

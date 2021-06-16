@@ -6,6 +6,7 @@ import javax.persistence.*;
 /**
  * A printed work consisting of sheets of paper bound together that is written by a writer.
  */
+@Entity
 public class Books {
     // Variables
 
@@ -144,4 +145,8 @@ public class Books {
                 " Book Title: " + this.title + " Year Published: " + this.year_published +
                 " Email: " + getAuthorEmail();
     }
+
+    public void setAuthorEmail(authoring_entities authoringEntities){
+        this.authoringEntities = authoringEntities;
+    };
 }
