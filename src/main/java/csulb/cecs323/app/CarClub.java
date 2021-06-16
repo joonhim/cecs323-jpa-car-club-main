@@ -80,7 +80,8 @@ public class CarClub {
          System.out.println("3. Delete a Publisher");
          System.out.println("4. Return all Primary Key for Publisher");
          System.out.println("5. Return all Primary Key for Books");
-         System.out.println("6. Exit");
+         System.out.println("6. Add a Writing Group");
+         System.out.println("7. Exit");
 
 
          Scanner scan = new Scanner(System.in);
