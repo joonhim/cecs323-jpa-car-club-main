@@ -150,7 +150,4 @@ public class Books {
                 " Email: " + getAuthorEmail();
     }
 
-    public void setAuthorEmail(authoring_entities authoringEntities){
-        this.authoringEntities = authoringEntities;
-    };
 }
