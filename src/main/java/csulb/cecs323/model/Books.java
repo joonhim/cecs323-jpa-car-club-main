@@ -149,4 +149,8 @@ public class Books {
                 " Book Title: " + this.title + " Year Published: " + this.year_published +
                 " Email: " + getAuthorEmail();
     }
+
+    public void setAuthorEmail(authoring_entities authoringEntities){
+        this.authoringEntities = authoringEntities;
+    };
 }

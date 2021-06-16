@@ -8,37 +8,29 @@
  *
  *  2018 Alvaro Monge <alvaro.monge@csulb.edu>
  *
- * Originally provided by Dr. Alvaro Monge of CSULB, and subsequently modified by Dave Brown.
  */
 
 package csulb.cecs323.app;
 
-// Imported the necessary Java packages and extensions needed for this program.
+// Import all of the entity classes that we have written for this application.
 import csulb.cecs323.model.*;
+
 import javax.persistence.*;
 import java.awt.print.Book;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
 /**
- * A program using Java Persistence API (JPA) with Books as an example.
- * Used the database from the CarClub lab and modified it to fit this program.
- *
- * Project: JPA - Books
- * Class: CECS 323
- * Professor: David Brown
- * Date: June 16, 2021
- *
- * @author Edward Ahn
- * @author Joon Im
- * @author Marie Payad
- * @author Nathaniel Monte de Ramos
- *
+ * A simple application to demonstrate how to persist an object in JPA.
+ * <p>
+ * This is for demonstration and educational purposes only.
+ * </p>
+ * <p>
+ *     Originally provided by Dr. Alvaro Monge of CSULB, and subsequently modified by Dave Brown.
+ * </p>
  */
-
 public class CarClub {
    /**
     * You will likely need the entityManager in a great many functions throughout your application.
@@ -55,8 +47,9 @@ public class CarClub {
     * application, without resorting to creating a global variable.
     */
    private static final Logger LOGGER = Logger.getLogger(CarClub.class.getName());
+    private Scanner enquiry;
 
-   /**
+    /**
     * The constructor for the CarClub class.  All that it does is stash the provided EntityManager
     * for use later in the application.
     * @param manager    The EntityManager that we will use.
@@ -90,13 +83,15 @@ public class CarClub {
          System.out.println("5. Return all Primary Key for Books");
          System.out.println("6. Add a Writing Group");
          System.out.println("7. Add a Book");
-         System.out.println("8. Delete a Book");
-         System.out.println("9. ");
-         System.out.println("10. ");
-         System.out.println("11. ");
-         System.out.println("12. ");
-         System.out.println("13. ");
-         System.out.println("8. Exit");
+         System.out.println("8. Add an Individual Author");
+         System.out.println("9. Add an Ad Hoc Team");
+         System.out.println("10. Add an author to an existing Writing Group");
+         System.out.println("11. Retrieve all Books");
+         System.out.println("12. Retrieve all Writing Group");
+         System.out.println("13. Delete a Book");
+         System.out.println("14. Update a Book");
+         System.out.println("15. Return all Primary Key for Authoring Entities");
+         System.out.println("16. Exit");
 
          Scanner scan = new Scanner(System.in);
 
@@ -149,19 +144,49 @@ public class CarClub {
                 break;
             case 8:
                 tx.begin();
+                System.out.println("Add an Individual Author");
+                carclub.createEntity(carclub.addindividual_author());
+                tx.commit();
+                LOGGER.fine("End of Transaction");
+                break;
+            case 9:
+                tx.begin();
+                System.out.println("Add an Ad Hoc Teams");
+                carclub.createEntity(carclub.addad_hoc_team());
+                tx.commit();
+                LOGGER.fine("End of Transaction");
+                break;
+            case 10:
+                break;
+            case 11:
+                System.out.println("Returning all Books");
+                carclub.returnBook();
+                break;
+            case 12:
+                System.out.println("Returning all Books");
+                carclub.returnWritingGroup();
+                break;
+            case 13:
+                tx.begin();
                 System.out.println("Delete a Book");
                 carclub.deleteBooks();
                 tx.commit();
                 LOGGER.fine("End of Transaction");
-//                 System.out.println("Thank you. Have a nice Day.");
                 break;
-             case 9:
-                 tx.begin();
-                 System.out.println("Adding Individual Author");
-                 carclub.createEntity(carclub.addIndividualAuthor());
-                 tx.commit();
-                 LOGGER.fine("End of Transaction");
-                 return;
+            case 14:
+                tx.begin();
+                System.out.println("Update Books");
+                carclub.updateBooks();
+                tx.commit();
+                LOGGER.fine("End of Transaction");
+                break;
+            case 15:
+                System.out.println("Return all Primary Key for Authoring Entities");
+                carclub.returnPKAuthoringEntity();
+                break;
+            case 16:
+                System.out.println("Thank you. Have a nice Day.");
+                return;
             default:
                valid = false;
                System.out.println("Invalid Response: " + ans + ". Please select from the menu.");
@@ -217,8 +242,6 @@ public class CarClub {
       }
    }// End of the getStyle method
 
-
-
    public List<Publishers> addPublisher(){
       List<Publishers> adding_publisher = new ArrayList<Publishers>();
       Scanner scan = new Scanner(System.in);
@@ -245,6 +268,26 @@ public class CarClub {
        System.out.println();
    }
 
+   public void returnBook(){
+       query = entityManager.createNativeQuery("SELECT * FROM BOOKS");
+       List<Object[]> result = query.getResultList();
+       System.out.print("Books: ");
+       for(int i = 0; i < result.size(); i++){
+           System.out.printf("\n" + (i+1) + ". " + result.get(i)[0] + " " + result.get(i)[1] + " "
+                   + result.get(i)[2] + " " + result.get(i)[3] + " " + result.get(i)[4]);
+       }
+   }
+
+   public void returnWritingGroup(){
+       query = entityManager.createNativeQuery("SELECT * FROM AUTHORING_ENTITIES WHERE AUTHORING_ENTITY_TYPE = 'Writing Group'");
+       List<Object[]> result = query.getResultList();
+       System.out.print("Writing Group: ");
+       for(int i = 0; i < result.size(); i++ ){
+           System.out.printf("\n" + (i+1) +  ". " + result.get(i)[0] + " " + result.get(i)[1] + " "
+                   + result.get(i)[2] + " " + result.get(i)[3] + " " + result.get(i)[4]);
+       }
+   }
+
    public void returnPkPublisher(){
        query = entityManager.createNativeQuery("SELECT PUBLISHERS.NAME FROM PUBLISHERS");
        List<Object[]> result = query.getResultList();
@@ -254,6 +297,17 @@ public class CarClub {
        }
        System.out.println();
    }
+
+   public void returnPKAuthoringEntity(){
+       query = entityManager.createNativeQuery("SELECT AUTHORING_ENTITIES.EMAIL FROM AUTHORING_ENTITIES");
+       List<Object[]> result = query.getResultList();
+       System.out.print("PK of Authoring Entities");
+       for (int i = 0; i < result.size(); i++){
+           System.out.printf("\n" + result.get(i));
+       }
+       System.out.println();
+   }
+
    public void deletePublisher(){
        returnPublisher();
        Scanner scan = new Scanner(System.in);
@@ -319,25 +373,6 @@ public class CarClub {
     /**
      * Deleting Books in DB
      */
-//    public void deleteBooks(){
-//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
-//        EntityManager em = emf.createEntityManager();
-//
-//        Scanner scan = new Scanner(System.in);
-//        System.out.println("What is the name of the book");
-//        System.out.println("Enter the name of the publisher of the book: ");
-//        String name_publisher = scan.nextLine();
-//        System.out.println("Enter the title of the book: ");
-//        String title = scan.nextLine();
-//        System.out.println("Enter the Authoring Entity Email: ");
-//        String authoring_email = scan.nextLine();
-//        Query q = em.createNativeQuery("DELETE ISBN, TITLE, YEAR_PUBLISHED, AUTHORING_ENTITY_NAME, PUBLISHER_NAME  FROM BOOK a WHERE PUBLISHER_NAME = :name_publisher AND TITLE = :title AND AUTHORING_ENTITY_NAME = :authoring_email", Books.class);
-//        List<Books> book = q.getResultList();
-//        for (Books a : book) {
-//            System.out.println(a.getBookTitle()+ " was deleted from the database");
-//        }
-//    }
-
     public void deleteBooks(){
         Scanner scan = new Scanner(System.in);
         System.out.println("What is the name of the book");
@@ -347,12 +382,15 @@ public class CarClub {
         String title = scan.nextLine();
         System.out.println("Enter the Authoring Entity Email: ");
         String authoring_email = scan.nextLine();
+        System.out.println("Enter the ISBN");
+        int isbn = scan.nextInt();
         query = entityManager.createNativeQuery("SELECT Publisher_Name, title, Authoring_Entity_Email FROM BOOKS");
         List<Books> book = query.getResultList();
         boolean ans = book.isEmpty();
-        if (ans == true)
+        if (ans == false)
         {
-            query = entityManager.createNativeQuery("DELETE ISBN, TITLE, YEAR_PUBLISHED, AUTHORING_ENTITY_NAME, PUBLISHER_NAME  FROM BOOK a, Books.class");
+            query = entityManager.createNativeQuery("DELETE FROM BOOKS WHERE BOOKS.ISBN = '" + isbn + "'");
+            query.executeUpdate();
             System.out.println(title+ " was deleted from the database");
         }
         else{
@@ -360,15 +398,15 @@ public class CarClub {
         }
     }
 
+
     /**
      * Updating Books in DB
      */
-
     public void updateBooks(){
         Scanner scan = new Scanner(System.in);
         System.out.println("Enter the ISBN of the book: ");
         String isbn1 = scan.nextLine();
-        query = entityManager.createNativeQuery("SELECT ISBN, TITLE, YEAR_PUBLISHED, AUTHORING_ENTITY_NAME, PUBLISHER_NAME  FROM BOOK a WHERE ISBN = :isbn1");
+        query = entityManager.createNativeQuery("SELECT ISBN, TITLE, YEAR_PUBLISHED, AUTHORING_ENTITY_NAME, PUBLISHER_NAME  FROM BOOKS WHERE ISBN =  isbn1");
         List<Books> book = query.getResultList();
         for (Books a : book) {
             System.out.println("Enter New Authoring Entity Name: ");
@@ -377,34 +415,18 @@ public class CarClub {
             a.setAuthorEmail(bookAuthorEmail.get(0));
         }
     }
-//    public void updateBooks(){
-//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
-//        EntityManager em = emf.createEntityManager();
-//        Scanner scan = new Scanner(System.in);
-//        System.out.println("Enter the ISBN of the book: ");
-//        String isbn1 = scan.nextLine();
-//        Book a = em.find(Book.class, isbn);
-//        Query q = em.createNativeQuery("SELECT ISBN, TITLE, YEAR_PUBLISHED, AUTHORING_ENTITY_NAME, PUBLISHER_NAME  FROM BOOK a WHERE ISBN = :isbn1", Books.class);
-//        List<Books> book = q.getResultList();
-//        for (Books a : book) {
-//            System.out.println("Enter Authoring Entity Name: ");
-//            String authoring_name = scan.nextLine();
-//            a.setAuthorEntityEmail(authoring_name);
-//        }
-//    }
 
     /**
      * Returns PK of Books
      */
     public void returnPkBook(){
-        query = entityManager.createNativeQuery("SELECT ISBN, BOOK.TITLE  FROM BOOK");
+        query = entityManager.createNativeQuery("SELECT ISBN, BOOKS.TITLE  FROM BOOKS");
         List<Object[]> res = query.getResultList();
         for(int i = 0; i < res.size(); i++){
             System.out.println((i+1) + ". " + res.get(i)[0]);
         }
     }
-
-    public List<individual_author> addIndividualAuthor() {
+    public List<individual_author> addindividual_author() {
         List<individual_author> individualAuthors = new ArrayList<individual_author>();
 
         Scanner scan = new Scanner(System.in);
@@ -414,17 +436,9 @@ public class CarClub {
 
         individualAuthors.add(new individual_author(email));
         System.out.println("Authoring Entity " + email + " has been added to the database");
-
         return individualAuthors;
-
-//        List<individual_author> individualAuthors = new ArrayList<individual_author>();
-//        Scanner scan = new Scanner(System.in);
-//        System.out.println("Adding an Authoring Entity");
-//        System.out.println("Enter Author Email: ");
-//        String email = scan.nextLine();
-
     }
-    public List<ad_hoc_team> addAdHocTeam() {
+    public List<ad_hoc_team> addad_hoc_team() {
         List<ad_hoc_team> adHocTeams = new ArrayList<ad_hoc_team>();
         Scanner scan = new Scanner(System.in);
         System.out.println("Adding an Authoring Entity");
@@ -434,4 +448,5 @@ public class CarClub {
         System.out.println("Authoring Entity " + email + " has been added to the database");
         return adHocTeams;
     }
+
 } // End of CarClub class
