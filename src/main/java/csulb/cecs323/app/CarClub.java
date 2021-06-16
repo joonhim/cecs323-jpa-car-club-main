@@ -80,9 +80,15 @@ public class CarClub {
          System.out.println("3. Delete a Publisher");
          System.out.println("4. Return all Primary Key for Publisher");
          System.out.println("5. Return all Primary Key for Books");
-         System.out.println("6. Writing Group");
-         System.out.println("7. Exit");
-
+         System.out.println("6. Add a Writing Group");
+         System.out.println("7. Add a Book");
+         System.out.println("8. ");
+         System.out.println("9. ");
+         System.out.println("10. ");
+         System.out.println("11. ");
+         System.out.println("12. ");
+         System.out.println("13. ");
+         System.out.println("8. Exit");
 
          Scanner scan = new Scanner(System.in);
 
@@ -122,13 +128,20 @@ public class CarClub {
             case 6:
                 tx.begin();
                 System.out.println("Adding a Writing Group");
-                carclub.addWritingGroup();
+                carclub.createEntity(carclub.addWritingGroup());
                 tx.commit();
                 LOGGER.fine("End of Transaction");
                 break;
             case 7:
-                System.out.println("Thank you. Have a nice Day.");
-                return;
+                tx.begin();
+                System.out.println("Add a Book");
+                carclub.createEntity(carclub.addBook());
+                tx.commit();
+                LOGGER.fine("End of Transaction");
+                break;
+            case 8:
+                 System.out.println("Thank you. Have a nice Day.");
+                 return;
             default:
                valid = false;
                System.out.println("Invalid Response: " + ans + ". Please select from the menu.");
@@ -240,7 +253,9 @@ public class CarClub {
    /**
    * Adding Book into DB
    */
-   public void addBook() {
+   public List<Books> addBook() {
+       List<Books> book = new ArrayList<Books>();
+
       Scanner scan = new Scanner(System.in);
       System.out.println("Adding a Book");
       System.out.println("Enter the ISBN: ");
@@ -248,24 +263,25 @@ public class CarClub {
       System.out.println("Enter the Title: ");
       String title = scan.nextLine();
       System.out.println("Enter Year Published: ");
-      String year = scan.nextLine();
-      System.out.println("Enter Authoring Entity Name: ");
-      int authoring_name = scan.nextInt();
-      System.out.println("Enter the Publisher Name: ");
-      String publisher_name = scan.nextLine();
+      int year = scan.nextInt();
 
-      Books book = new Books(isbn, title, year, authoring_name, publisher_name);
-      entityManager.persist(book);
+      List<Publishers> bookPublisher = addPublisher();
+      List<WritingGroups> bookAuthorEmail = addWritingGroup();
+
+      book.add(new Books(isbn, title, year, bookPublisher.get(0), bookAuthorEmail.get(0)));
+
       System.out.println("Book " + title + " has been added to the database");
+      return book;
    }
 
     /**
      * Adding Authoring Entity into DB
      */
-    public void addWritingGroup() {
+    public List<WritingGroups> addWritingGroup() {
+        List<WritingGroups> writingGroups = new ArrayList<WritingGroups>();
+
         Scanner scan = new Scanner(System.in);
         System.out.println("Adding an Authoring Entity");
-
         System.out.println("Enter Author Email: ");
         String email = scan.nextLine();
         System.out.println("Enter the Author Name: ");
@@ -275,11 +291,9 @@ public class CarClub {
         System.out.println("Enter the Year Formed: ");
         int yearFormed = scan.nextInt();
 
-        //AuthoringEntities authoringEntity = new AuthoringEntities(email, name, headWriter, yearFormed);
-        WritingGroups writingGroup = new WritingGroups(email, name, headWriter, yearFormed);
-
-        entityManager.persist(writingGroup);
+        writingGroups.add(new WritingGroups(email, name, headWriter, yearFormed));
         System.out.println("Authoring Entity " + name + " has been added to the database");
+        return writingGroups;
     }
 
     /**
