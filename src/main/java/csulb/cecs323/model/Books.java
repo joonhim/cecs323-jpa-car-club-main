@@ -6,6 +6,7 @@ import javax.persistence.*;
 /**
  * A printed work consisting of sheets of paper bound together that is written by a writer.
  */
+@Entity
 public class Books {
     // Variables
 
@@ -133,6 +134,10 @@ public class Books {
     public String getAuthorEmail(){
         return authoringEntities.getEmail();
     }
+
+    public void setAuthorEmail(authoring_entities authoringEntities){
+        this.authoringEntities = authoringEntities;
+    };
 
     /**
      * toString() method prints the string values of the Book

@@ -21,7 +21,7 @@ public class individual_author extends authoring_entities {
      */
     @Id // Primary Key
     @OneToOne
-    @JoinColumn(name = "individual_authors_email", referencedColumnName = "email", nullable = false)
+    @JoinColumn(name = "INDIVIDUAL_AUTHORS_EMAIL", referencedColumnName = "email", nullable = false)
     private authoring_entities authoringEntities;
 
     // Constructor
