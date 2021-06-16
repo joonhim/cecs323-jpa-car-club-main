@@ -31,10 +31,9 @@ public class individual_author extends authoring_entities {
     /**
      * The constructor for the individual_author class.
      * @param email
-     * @param name
      */
-    public individual_author(String email, String name){
-        super(email, name);
+    public individual_author(String email){
+        super(email);
     }
 
     @Override
