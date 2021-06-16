@@ -145,7 +145,11 @@ public class CarClub {
                 LOGGER.fine("End of Transaction");
                 break;
             case 8:
+                tx.begin();
                 System.out.println("Add an Individual Author");
+                carclub.createEntity(carclub.addindividual_author());
+                tx.commit();
+                LOGGER.fine("End of Transaction");
                 break;
             case 9:
                 break;
@@ -352,6 +356,7 @@ public class CarClub {
         }
     }
 
+
     /**
      * Updating Books in DB
      */
@@ -380,5 +385,18 @@ public class CarClub {
         for(int i = 0; i < res.size(); i++){
             System.out.println((i+1) + ". " + res.get(i)[0]);
         }
+    }
+    public List<individual_author> addindividual_author() {
+        List<individual_author> individualAuthors = new ArrayList<individual_author>();
+
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter Author Email: ");
+        String email = scan.nextLine();
+        System.out.println("Enter the Author Name: ");
+        String name = scan.nextLine();
+
+        individualAuthors.add(new individual_author(email, name));
+        System.out.println("Author" + name + " has been added to the database");
+        return individualAuthors;
     }
 } // End of CarClub class
