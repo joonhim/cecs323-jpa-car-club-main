@@ -12,8 +12,8 @@ public class ad_hoc_team extends authoring_entities {
     private String type;
 
     public ad_hoc_team(){}
-    public ad_hoc_team (String email, String name){
-        super(email, name);
+    public ad_hoc_team (String email){
+        super(email);
     }
 
     @Override

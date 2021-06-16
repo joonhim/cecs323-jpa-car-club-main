@@ -152,6 +152,11 @@ public class CarClub {
                 LOGGER.fine("End of Transaction");
                 break;
             case 9:
+                tx.begin();
+                System.out.println("Add an Ad Hoc Teams");
+                carclub.createEntity(carclub.addad_hoc_team());
+                tx.commit();
+                LOGGER.fine("End of Transaction");
                 break;
             case 10:
                 break;
@@ -390,13 +395,23 @@ public class CarClub {
         List<individual_author> individualAuthors = new ArrayList<individual_author>();
 
         Scanner scan = new Scanner(System.in);
+        System.out.println("Adding an Authoring Entity");
         System.out.println("Enter Author Email: ");
         String email = scan.nextLine();
-        System.out.println("Enter the Author Name: ");
-        String name = scan.nextLine();
 
-        individualAuthors.add(new individual_author(email, name));
-        System.out.println("Author" + name + " has been added to the database");
+        individualAuthors.add(new individual_author(email));
+        System.out.println("Authoring Entity " + email + " has been added to the database");
         return individualAuthors;
     }
+    public List<ad_hoc_team> addad_hoc_team() {
+        List<ad_hoc_team> adHocTeams = new ArrayList<ad_hoc_team>();
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Adding an Authoring Entity");
+        System.out.println("Enter Ad Hoc Team Email: ");
+        String email = scan.nextLine();
+        adHocTeams.add(new ad_hoc_team(email));
+        System.out.println("Authoring Entity " + email + " has been added to the database");
+        return adHocTeams;
+    }
+
 } // End of CarClub class

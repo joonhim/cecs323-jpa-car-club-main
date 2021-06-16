@@ -29,9 +29,8 @@ public class authoring_entities {
         this.year_formed = yf;
     }
 
-    public authoring_entities(String email, String name){
+    public authoring_entities(String email){
         this.email = email;
-        this.name = name;
     }
 
 
