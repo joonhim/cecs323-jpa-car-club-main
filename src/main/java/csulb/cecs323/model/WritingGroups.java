@@ -7,20 +7,32 @@ import javax.persistence.Entity;
 /**
  * A gathering of writers who meet regularly to offer constructive feedback for each other's work.
  */
+
+/**
+ * The WritingGroups class inherits the attributes and methods from authoring_entities class.
+ *
+ * DiscriminatorValue specifies Writing Group for the DiscriminatorColumn in authoring_entities.
+ */
 @Entity
 @DiscriminatorValue("Writing Group")
 public class WritingGroups extends authoring_entities {
+    // Constructor
 
+    /**
+     * The constructor for the Writing Groups class.
+     * @param email
+     * @param name
+     * @param head_writer
+     * @param year_formed
+     */
     public WritingGroups(String email, String name, String head_writer, int year_formed){
         super(email, name, head_writer, year_formed);
     }
 
-    // Constructor
-
     public WritingGroups() { }
 
     /**
-     * 
+     * Gets the email address of the Author.
      * @return Email address of the Author
      */
     @Override
