@@ -6,16 +6,13 @@ import javax.persistence.*;
 /**
  * A printed work consisting of sheets of paper bound together that is written by a writer.
  */
-@Entity
 public class Books {
-    // Variables
-
     /**
      * The number of the ISBN.
      */
-    @Id // Primary Key annotation
+    @Id //PK
     @Column(length = 17, nullable = false)
-    private String ISBN;
+    private String isbn;
 
     /**
      * The title of the Book.
@@ -27,45 +24,35 @@ public class Books {
      * The year the Book is published.
      */
     @Column(length = 4, nullable = false)
-    private int yearPublished;
+    private int year_published;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PUBLISHER_NAME", referencedColumnName = "PUBLISHER_NAME", nullable = false)
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "Publisher_Name", referencedColumnName = "name", nullable = false)
     private Publishers publishers;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn(name = "AUTHORING_ENTITY_EMAIL")
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "Authoring_Entity_Email", referencedColumnName = "email", nullable = false)
     private authoring_entities authoringEntities;
 
-
-    // Constructor
-
+    /**
+     * Constructor
+     */
     public Books() {}
 
     /**
      * The constructor for the Book class.
-     * @param name
      * @param isbn
-     * @param book_title
-     * @param year_published
-     * @param author_entity_email
+     * @param bookTitle
+     * @param yearPublished
+     * @param publisher
+     * @param author
      */
     public Books(String isbn, String bookTitle, int yearPublished, Publishers publisher, authoring_entities author) {
-        this.ISBN = isbn;
+        this.isbn = isbn;
         this.title = bookTitle;
         this.year_published = yearPublished;
         this.publishers = publisher;
         this.authoringEntities = author;
-    }
-
-    // Getters & Setters
-
-    /**
-     * Gets the name of the Publisher.
-     * @return Name of the Publisher
-     */
-    public String getName() {
-        return this.name;
     }
 
     /**
@@ -73,7 +60,7 @@ public class Books {
      * @return ISBN of the Book
      */
     public String getISBN() {
-        return this.ISBN;
+        return this.isbn;
     }
 
     /**
@@ -81,7 +68,7 @@ public class Books {
      * @return Title of the Book
      */
     public String getBookTitle() {
-        return this.bookTitle;
+        return this.title;
     }
 
     /**
@@ -89,27 +76,16 @@ public class Books {
      * @return Year the Book is published
      */
     public int getYearPublished() {
-        return this.yearPublished;
+        return this.year_published;
     }
 
-    public String getAuthorEntityEmail() {
-        return this.authorEntityEmail;
-    }
-
-    /**
-     * Changes the name of the Publisher of the Book.
-     * @param name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
 
     /**
      * Changes the ISBN number of the Book.
      * @param isbn
      */
     public void setISBN(String isbn) {
-        this.ISBN = isbn;
+        this.isbn = isbn;
     }
 
     /**
@@ -117,34 +93,32 @@ public class Books {
      * @param book_title
      */
     public void setBookTitle(String book_title) {
-        this.bookTitle = book_title;
+        this.title = book_title;
     }
-
     /**
      * Changes the year published of the Book.
      * @param year_published
      */
     public void setYearPublished(int year_published) {
-        this.yearPublished = year_published;
+        this.year_published = year_published;
+    }
+
+    public String getPublisherName(){
+        return publishers.getName();
+    }
+
+    public String getAuthorEmail(){
+        return authoringEntities.getEmail();
     }
 
     /**
-     * Changes the email of the Author Entity.
-     * @param author_entity_email
+     * Returns string values of Books
      */
-    public void setAuthorEntityEmail(String author_entity_email) {
-        this.authorEntityEmail = author_entity_email;
-    }
 
-    /**
-     * toString() method prints the string values of Books.
-     *
-     * @return Publisher Name, ISBN, Book Title, Year Published, Author Entity Email
-     */
     @Override
     public String toString () {
-        return "Publisher Name: " + this.name + " ISBN: " + this.ISBN +
-                " Book Title: " + this.bookTitle + " Year Published: " + this.yearPublished +
-                " Email: " + this.authorEntityEmail;
+        return "Publisher Name: " + getPublisherName() + " ISBN: " + this.isbn +
+                " Book Title: " + this.title + " Year Published: " + this.year_published +
+                " Email: " + getAuthorEmail();
     }
 }
