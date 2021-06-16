@@ -10,7 +10,7 @@ import javax.persistence.*;
 /**
  * The individual_author class inherits the attributes and methods from authoring_entities class.
  *
- * DiscriminatorValue specifies individual_author for the DiscriminatorColumn in authoring_entities.
+ * DiscriminatorValue specifies Individual Author for the DiscriminatorColumn in authoring_entities.
  */
 @Entity
 @DiscriminatorValue("Individual Author")
@@ -36,6 +36,10 @@ public class individual_author extends authoring_entities {
         super(email);
     }
 
+    /**
+     * Gets the email address of Individual Author.
+     * @return Email address of Individual Author
+     */
     @Override
     public String getEmail() {
         return super.getEmail();
