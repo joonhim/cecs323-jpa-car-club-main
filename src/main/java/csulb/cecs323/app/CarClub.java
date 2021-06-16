@@ -8,13 +8,13 @@
  *
  *  2018 Alvaro Monge <alvaro.monge@csulb.edu>
  *
+ * Originally provided by Dr. Alvaro Monge of CSULB, and subsequently modified by Dave Brown.
  */
 
 package csulb.cecs323.app;
 
-// Import all of the entity classes that we have written for this application.
+// Imported the necessary Java packages and extensions needed for this program.
 import csulb.cecs323.model.*;
-
 import javax.persistence.*;
 import java.awt.print.Book;
 import java.util.ArrayList;
@@ -23,14 +23,21 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 
 /**
- * A simple application to demonstrate how to persist an object in JPA.
- * <p>
- * This is for demonstration and educational purposes only.
- * </p>
- * <p>
- *     Originally provided by Dr. Alvaro Monge of CSULB, and subsequently modified by Dave Brown.
- * </p>
+ * A program using Java Persistence API (JPA) with Books as an example.
+ * Used the database from the CarClub lab and modified it to fit this program.
+ *
+ * Project: JPA - Books
+ * Class: CECS 323
+ * Professor: David Brown
+ * Date: June 16, 2021
+ *
+ * @author Edward Ahn
+ * @author Joon Im
+ * @author Marie Payad
+ * @author Nathaniel Monte de Ramos
+ *
  */
+
 public class CarClub {
    /**
     * You will likely need the entityManager in a great many functions throughout your application.
