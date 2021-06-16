@@ -1,45 +1,106 @@
 package csulb.cecs323.model;
 
+// Imported the necessary Java packages and extensions needed for this class.
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+/**
+ * A person or a corporate body responsible for releasing printed documents to the public.
+ */
 @Entity
 public class Publishers {
-    /* Variables
+    // Variables
+
+    /**
+     * The name of the Publisher.
      */
-    @Id
+    @Id // Primary Key
+    @Column(length = 80, nullable = false)
     private String name;
+
+    /**
+     * The phone number of the Publisher.
+     */
+    @Column(length = 24, nullable = false)
     private String phone;
+
+    /**
+     * The email address of the Publisher.
+     */
+    @Column(length = 80, nullable = false)
     private String email;
 
-    /* Constructor
-     */
+
+    // Constructor
+
     public Publishers(){}
 
+    /**
+     * The constructor of the Publisher class.
+     * @param name
+     * @param email
+     * @param phone
+     */
     public Publishers(String name, String email, String phone){
         this.name = name;
         this.email = email;
         this.phone = phone;
     }
 
-    /* getters and setters
+    // Getters & Setters
+
+    /**
+     * Gets the name of the Publisher.
+     * @return Name of the Publisher
      */
-    public String getName(){return this.name;}
+    public String getName(){
+        return this.name;
+    }
+
+    /**
+     * Changes the name of the Publisher.
+     * @param name
+     */
     public void setName(String name){
         this.name = name;
     }
 
-    public String getPhone(){return this.phone;}
+    /**
+     * Gets the phone number of the Publisher.
+     * @return Phone number of the Publisher
+     */
+    public String getPhone(){
+        return this.phone;
+    }
+
+    /**
+     * Changes the phone number of the Publisher.
+     * @param phone
+     */
     public void setPhone(String phone){
         this.phone = phone;
     }
 
-    public String getEmail(){return this.email;}
+    /**
+     * Gets the email address of the Publisher.
+     * @return Email address of the Publisher
+     */
+    public String getEmail(){
+        return this.email;
+    }
+
+    /**
+     * Changes the email address of the Publisher.
+     * @param email
+     */
     public void setEmail(String email){
         this.email = email;
     }
 
-    /* function that returns string values of the publisher
+    /**
+     * toString() method prints the string values of the Publisher
+     * @return Publisher Name, Publisher Phone, Publisher Email
      */
     @Override
     public String toString(){
