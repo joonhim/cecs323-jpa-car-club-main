@@ -11,11 +11,6 @@ public class Books {
     // Variables
 
     /**
-     * The name of the Publisher.
-     */
-    private String name;
-
-    /**
      * The number of the ISBN.
      */
     @Id // Primary Key annotation
@@ -26,19 +21,13 @@ public class Books {
      * The title of the Book.
      */
     @Column(length = 80, nullable = false)
-    private String bookTitle;
+    private String title;
 
     /**
      * The year the Book is published.
      */
     @Column(length = 4, nullable = false)
     private int yearPublished;
-
-    /**
-     * The email of the Author Entity.
-     */
-    @Column(length = 30, nullable = false)
-    private String authorEntityEmail;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PUBLISHER_NAME", referencedColumnName = "PUBLISHER_NAME", nullable = false)
@@ -61,12 +50,12 @@ public class Books {
      * @param year_published
      * @param author_entity_email
      */
-    public Books(String name, String isbn, String book_title, int year_published, String author_entity_email) {
-        this.name = name;
+    public Books(String isbn, String bookTitle, int yearPublished, Publishers publisher, authoring_entities author) {
         this.ISBN = isbn;
-        this.bookTitle = book_title;
-        this.yearPublished = year_published;
-        this.authorEntityEmail = author_entity_email;
+        this.title = bookTitle;
+        this.year_published = yearPublished;
+        this.publishers = publisher;
+        this.authoringEntities = author;
     }
 
     // Getters & Setters

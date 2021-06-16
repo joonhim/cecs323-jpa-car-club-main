@@ -1,5 +1,6 @@
 package csulb.cecs323.model;
 
+// Imported the necessary Java packages
 import javax.persistence.*;
 
 @Entity
