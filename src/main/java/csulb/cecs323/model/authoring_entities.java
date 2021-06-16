@@ -4,7 +4,7 @@ package csulb.cecs323.model;
 import javax.persistence.*;
 
 /**
- * A collection of various
+ * A parent class for Writing Group, Ad Hoc Team and Individual Author.
  */
 
 /**
