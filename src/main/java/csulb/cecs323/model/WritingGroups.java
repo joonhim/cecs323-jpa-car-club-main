@@ -15,8 +15,14 @@ public class WritingGroups extends authoring_entities {
         super(email, name, head_writer, year_formed);
     }
 
+    // Constructor
+
     public WritingGroups() { }
 
+    /**
+     * 
+     * @return Email address of the Author
+     */
     @Override
     public String getEmail(){ return super.getEmail();}
 
