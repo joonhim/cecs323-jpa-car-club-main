@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 @DiscriminatorValue("Individual Author")
 public class individual_author extends authoring_entities {
-
     @Id
     @OneToOne
     @JoinColumn(name = "individual_authors_email", referencedColumnName = "email", nullable = false)
