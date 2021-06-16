@@ -82,13 +82,18 @@ public class CarClub {
          System.out.println("5. Return all Primary Key for Books");
          System.out.println("6. Add a Writing Group");
          System.out.println("7. Add a Book");
-         System.out.println("8. ");
-         System.out.println("9. ");
-         System.out.println("10. ");
-         System.out.println("11. ");
-         System.out.println("12. ");
-         System.out.println("13. ");
-         System.out.println("8. Exit");
+          /**
+           * Todo: functions for line 88 - 95
+           */
+         System.out.println("8. Add an Individual Author");
+         System.out.println("9. Add an Ad Hoc Team");
+         System.out.println("10. Add an author to an existing Writing Group");
+         System.out.println("11. Retrieve all Books");
+         System.out.println("12. Retrieve all Writing Group");
+         System.out.println("13. Delete a Book");
+         System.out.println("14. Update a Book");
+         System.out.println("15. Return all Primary Key for Authoring Entities");
+         System.out.println("16. Exit");
 
          Scanner scan = new Scanner(System.in);
 
@@ -140,8 +145,27 @@ public class CarClub {
                 LOGGER.fine("End of Transaction");
                 break;
             case 8:
-                 System.out.println("Thank you. Have a nice Day.");
-                 return;
+                System.out.println("Add an Individual Author");
+                break;
+            case 9:
+                break;
+            case 10:
+                break;
+            case 11:
+                System.out.println("Returning all Books");
+                carclub.returnBook();
+                break;
+            case 12:
+                break;
+            case 13:
+                break;
+            case 14:
+                break;
+            case 15:
+                break;
+            case 16:
+                System.out.println("Thank you. Have a nice Day.");
+                return;
             default:
                valid = false;
                System.out.println("Invalid Response: " + ans + ". Please select from the menu.");
@@ -223,6 +247,16 @@ public class CarClub {
            System.out.printf("\n" + (i+1) + ". " + result.get(i)[0] + " " + result.get(i)[1] + " " + result.get(i)[2]);
        }
        System.out.println();
+   }
+
+   public void returnBook(){
+       query = entityManager.createNativeQuery("SELECT * BOOKS");
+       List<Object[]> result = query.getResultList();
+       System.out.print("Books: ");
+       for(int i = 0; i < result.size(); i++){
+           System.out.printf("\n" + (i+1) + ". " + result.get(i)[0] + " " + result.get(i)[1] + " "
+                   + result.get(i)[2] + " " + result.get(i)[3] + " " + result.get(i)[4]);
+       }
    }
 
    public void returnPkPublisher(){
